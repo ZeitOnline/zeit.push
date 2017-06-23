@@ -1,6 +1,14 @@
 zeit.push changes
 =================
 
+1.20.3 (unreleased)
+-------------------
+
+- BUG-201: Make homepage publisher safe from ConflictErrors
+
+- MAINT: Remove obsolete banner control files (wrapper, ios-legacy)
+
+
 1.20.2 (2017-05-22)
 -------------------
 
