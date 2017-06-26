@@ -4,7 +4,7 @@ zeit.push changes
 1.20.4 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- MAINT: Send uniqueId as banner URL, since zeit.web expects that
 
 
 1.20.3 (2017-06-26)
