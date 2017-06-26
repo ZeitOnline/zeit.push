@@ -1,7 +1,7 @@
 zeit.push changes
 =================
 
-1.20.3 (unreleased)
+1.20.3 (2017-06-26)
 -------------------
 
 - BUG-201: Make homepage publisher safe from ConflictErrors
