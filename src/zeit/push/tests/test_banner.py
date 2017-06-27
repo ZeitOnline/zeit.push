@@ -65,11 +65,13 @@ class StaticArticlePublisherTest(zeit.push.testing.TestCase):
         with checked_out(content) as co:
             push = zeit.push.interfaces.IPushMessages(co)
             push.short_text = u'banner'
-            push.set({'type': 'homepage'}, enabled=True)
+            push.message_config = [{'type': 'homepage', 'enabled': True}]
         push = zeit.push.interfaces.IPushMessages(content)
         push.messages[0].send()
         transaction.abort()
-        self.assertEqual(True, push.get(type='homepage')['enabled'])
+        self.assertIn(
+            {'type': 'homepage', 'enabled': True}, push.message_config)
         push.messages[0].send()
         transaction.commit()
-        self.assertEqual(False, push.get(type='homepage')['enabled'])
+        self.assertIn(
+            {'type': 'homepage', 'enabled': False}, push.message_config)

@@ -66,10 +66,6 @@ class Message(grok.Adapter):
                 service['enabled'] = False
         push.message_config = config
 
-    def _disable_message_config(self):
-        push = zeit.push.interfaces.IPushMessages(self.context)
-        push.set(self.config, enabled=False)
-
     @property
     def text(self):
         push = zeit.push.interfaces.IPushMessages(self.context)
