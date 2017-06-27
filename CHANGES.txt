@@ -1,7 +1,7 @@
 zeit.push changes
 =================
 
-1.20.5 (unreleased)
+1.20.5 (2017-06-27)
 -------------------
 
 - Fix merge mistake in 1.20.3
