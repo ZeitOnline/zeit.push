@@ -4,7 +4,7 @@ from zeit.cms.checkout.interfaces import ICheckinManager
 from zeit.cms.content.interfaces import ISemanticChange
 from zeit.cms.interfaces import ICMSContent
 from zeit.cms.workflow.interfaces import IPublish, IPublishInfo
-from zeit.content.article.edit.interfaces import IBreakingNewsBody
+from zeit.push.interfaces import IBreakingNewsBanner
 import grokcore.component as grok
 import logging
 import pytz
@@ -16,6 +16,23 @@ import zope.interface
 
 
 log = logging.getLogger(__name__)
+
+
+class BreakingNewsBanner(grok.Adapter):
+
+    grok.context(zeit.content.rawxml.interfaces.IRawXML)
+    grok.implements(zeit.push.interfaces.IBreakingNewsBanner)
+
+    text = zeit.cms.content.property.ObjectPathProperty('.text')
+    article_id = zeit.cms.content.property.ObjectPathProperty('.article_id')
+
+    @property
+    def xml(self):
+        return self.context.xml
+
+    @xml.setter
+    def xml(self, xml):
+        self.context.xml = xml
 
 
 class StaticArticlePublisher(object):
@@ -30,8 +47,8 @@ class StaticArticlePublisher(object):
         log.debug('Setting %s, %s as body of %s', text, link, self.uniqueId)
         self._ensure_unlocked(article)
         with checked_out(article) as co:
-            IBreakingNewsBody(co).text = u'<a href="{link}">{text}</a>'.format(
-                link=link, text=text)
+            IBreakingNewsBanner(co).text = text
+            IBreakingNewsBanner(co).article_id = link
             # XXX The checked_out helper is rather technical (it does not
             # simulate a complete user interaction), thus specifying
             # checked_out(semantic_change=True) doesn't help: Since the checked
@@ -43,7 +60,6 @@ class StaticArticlePublisher(object):
             # modified date taken from the repository, which is not what we
             # want.
             ISemanticChange(co).last_semantic_change = datetime.now(pytz.UTC)
-        IPublishInfo(article).urgent = True
         IPublish(article).publish()
 
     def _ensure_unlocked(self, content):

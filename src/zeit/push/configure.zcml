@@ -5,6 +5,15 @@
 
   <grok:grok package="." />
 
+  <class class=".banner.BreakingNewsBanner">
+    <require
+      interface=".interfaces.IBreakingNewsBanner"
+      permission="zope.View" />
+    <require
+      set_schema=".interfaces.IBreakingNewsBanner"
+      permission="zeit.EditContent" />
+  </class>
+
   <class class=".workflow.PushMessages">
     <require
       interface=".interfaces.IPushMessages"

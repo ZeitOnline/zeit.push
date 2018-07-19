@@ -7,6 +7,7 @@ import zc.sourcefactory.source
 import zeit.cms.content.sources
 import zeit.cms.interfaces
 import zeit.content.image.interfaces
+import zeit.content.rawxml.interfaces
 import zeit.content.text.interfaces
 import zeit.content.text.jinja
 import zope.interface
@@ -77,6 +78,17 @@ class TechnicalError(Exception):
     raise this error.
 
     """
+
+
+class IBreakingNewsBanner(zeit.content.rawxml.interfaces.IRawXML):
+
+    text = zope.schema.Text(
+        title=_('Breaking news text'),
+        default=_('breaking-news-more-shortly'),
+        required=False)
+
+    article_id = zope.interface.Attribute(
+        'The uniqueID of the breaking news article')
 
 
 class IPushMessages(zope.interface.Interface):
