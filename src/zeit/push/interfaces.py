@@ -176,6 +176,7 @@ class TwitterAccountSource(zeit.cms.content.sources.XMLSource):
         node = nodes[0]
         return (node.get('token'), node.get('secret'))
 
+
 twitterAccountSource = TwitterAccountSource()
 
 
@@ -232,6 +233,7 @@ class FacebookAccountSource(zeit.cms.content.sources.XMLSource):
             return (None, None)
         node = nodes[0]
         return node.get('token')
+
 
 facebookAccountSource = FacebookAccountSource()
 
