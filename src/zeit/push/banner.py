@@ -43,10 +43,11 @@ class StaticArticlePublisher(object):
         self.uniqueId = uniqueId
 
     def send(self, text, link, **kw):
-        article = ICMSContent(self.uniqueId)
+        banner = ICMSContent(self.uniqueId)
         log.debug('Setting %s, %s as body of %s', text, link, self.uniqueId)
-        self._ensure_unlocked(article)
-        with checked_out(article) as co:
+        self._ensure_unlocked(banner)
+
+        with checked_out(banner) as co:
             IBreakingNewsBanner(co).text = text
             IBreakingNewsBanner(co).article_id = link
             # XXX The checked_out helper is rather technical (it does not
@@ -60,7 +61,7 @@ class StaticArticlePublisher(object):
             # modified date taken from the repository, which is not what we
             # want.
             ISemanticChange(co).last_semantic_change = datetime.now(pytz.UTC)
-        IPublish(article).publish()
+        IPublish(banner).publish()
 
     def _ensure_unlocked(self, content):
         lockable = zope.app.locking.interfaces.ILockable(content, None)
