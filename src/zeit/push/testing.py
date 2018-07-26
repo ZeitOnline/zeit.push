@@ -38,6 +38,7 @@ product_config = """\
   facebook-magazin-account fb-magazin
   facebook-campus-account fb-campus
   push-target-url http://www.zeit.de/
+  homepage-banner-uniqueid http://xml.zeit.de/banner
   mobile-image-url http://img.zeit.de/
   urbanairship-audience-group subscriptions
   urbanairship-author-push-template-name authors.json
